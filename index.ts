@@ -44,13 +44,14 @@ async function Main() {
       await EndAppointment();
       break;
     case 3:
-      await GetAllAppointments();
+      await GetAppointmentById();
       break;
     case 4:
+      await GetAllAppointments();
       break;
-    // case 5:
-    //   await
-    //   break;
+    case 7:
+      await GetAllContuningAppointments();
+      break;
     // case 0:
     // break;
     default:
@@ -64,12 +65,12 @@ async function Main() {
 //#region PostAppointment
 
 async function PostAppointment() {
-  let startDate = new Date();
-  let endDate = new Date();
   let patientName = readline.question("Patient Name: ");
   let doctorName = readline.question("Doctor Name: ");
-  startDate = readline.question("Start Date: ");
-  endDate = readline.question("End Date: ");
+  let promptStartDate = readline.question("Start Date: ");
+  let promptEndDate = readline.question("End Date: ");
+  let endDate = new Date(promptEndDate);
+  let startDate = new Date(promptStartDate);
   let data = {
     patientName,
     doctorName,
@@ -97,6 +98,29 @@ async function EndAppointment() {
 async function GetAllAppointments() {
   let response = await instance.get("");
   console.log(response.data);
+}
+
+//#endregion
+
+//#region Get Appointment By Id
+
+async function GetAppointmentById() {
+  let appointmentId = readline.question("Appointment Id: ");
+  let response = await instance.get(`${appointmentId}`);
+  console.log(response.data);
+}
+
+//#endregion
+
+//#region Get All Contuning Appointments
+
+async function GetAllContuningAppointments() {
+  let response = await instance.get("");
+  let appointments = response.data;
+  let filterContuningAppointments = appointments.filter(
+    (item: { endDate: Date }) => !item.endDate
+  );
+  console.log(filterContuningAppointments);
 }
 
 //#endregion

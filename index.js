@@ -68,25 +68,33 @@ function Main() {
                         case 2: return [3 /*break*/, 3];
                         case 3: return [3 /*break*/, 5];
                         case 4: return [3 /*break*/, 7];
+                        case 7: return [3 /*break*/, 9];
                     }
-                    return [3 /*break*/, 8];
+                    return [3 /*break*/, 11];
                 case 1: return [4 /*yield*/, PostAppointment()];
                 case 2:
                     _b.sent();
-                    return [3 /*break*/, 9];
+                    return [3 /*break*/, 12];
                 case 3: return [4 /*yield*/, EndAppointment()];
                 case 4:
                     _b.sent();
-                    return [3 /*break*/, 9];
-                case 5: return [4 /*yield*/, GetAllAppointments()];
+                    return [3 /*break*/, 12];
+                case 5: return [4 /*yield*/, GetAppointmentById()];
                 case 6:
                     _b.sent();
-                    return [3 /*break*/, 9];
-                case 7: return [3 /*break*/, 9];
+                    return [3 /*break*/, 12];
+                case 7: return [4 /*yield*/, GetAllAppointments()];
                 case 8:
+                    _b.sent();
+                    return [3 /*break*/, 12];
+                case 9: return [4 /*yield*/, GetAllContuningAppointments()];
+                case 10:
+                    _b.sent();
+                    return [3 /*break*/, 12];
+                case 11:
                     console.log("Select proper answer");
-                    return [3 /*break*/, 9];
-                case 9: return [2 /*return*/];
+                    return [3 /*break*/, 12];
+                case 12: return [2 /*return*/];
             }
         });
     });
@@ -95,16 +103,16 @@ function Main() {
 //#region PostAppointment
 function PostAppointment() {
     return __awaiter(this, void 0, void 0, function () {
-        var startDate, endDate, patientName, doctorName, data, response;
+        var patientName, doctorName, promptStartDate, promptEndDate, endDate, startDate, data, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    startDate = new Date();
-                    endDate = new Date();
                     patientName = readline.question("Patient Name: ");
                     doctorName = readline.question("Doctor Name: ");
-                    startDate = readline.question("Start Date: ");
-                    endDate = readline.question("End Date: ");
+                    promptStartDate = readline.question("Start Date: ");
+                    promptEndDate = readline.question("End Date: ");
+                    endDate = new Date(promptEndDate);
+                    startDate = new Date(promptStartDate);
                     data = {
                         patientName: patientName,
                         doctorName: doctorName,
@@ -149,6 +157,42 @@ function GetAllAppointments() {
                 case 1:
                     response = _a.sent();
                     console.log(response.data);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+//#endregion
+//#region Get Appointment By Id
+function GetAppointmentById() {
+    return __awaiter(this, void 0, void 0, function () {
+        var appointmentId, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    appointmentId = readline.question("Appointment Id: ");
+                    return [4 /*yield*/, instance.get("".concat(appointmentId))];
+                case 1:
+                    response = _a.sent();
+                    console.log(response.data);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+//#endregion
+//#region Get All Contuning Appointments
+function GetAllContuningAppointments() {
+    return __awaiter(this, void 0, void 0, function () {
+        var response, appointments, filterContuningAppointments;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, instance.get("")];
+                case 1:
+                    response = _a.sent();
+                    appointments = response.data;
+                    filterContuningAppointments = appointments.filter(function (item) { return !item.endDate; });
+                    console.log(filterContuningAppointments);
                     return [2 /*return*/];
             }
         });
