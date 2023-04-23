@@ -14,6 +14,7 @@ const options = [
   "Get Weekly Appointments",
   "Get Todays Appointments",
   "Get All Continuing Appointments",
+  "Delete Appointment",
 ];
 
 //#endregion
@@ -49,11 +50,18 @@ async function Main() {
     case 4:
       await GetAllAppointments();
       break;
+    case 5:
+      await GetWeeklyAppointments();
+      break;
+    case 6:
+      await GetTodaysAppointments();
+      break;
     case 7:
       await GetAllContuningAppointments();
       break;
-    // case 0:
-    // break;
+    case 8:
+      await DeleteAppointment();
+      break;
     default:
       console.log("Select proper answer");
       break;
@@ -121,6 +129,34 @@ async function GetAllContuningAppointments() {
     (item: { endDate: Date }) => !item.endDate
   );
   console.log(filterContuningAppointments);
+}
+
+//#endregion
+
+//#region Get Weekly Appointments
+
+async function GetWeeklyAppointments() {
+  let response = await instance.get("");
+  console.log(response.data);
+}
+
+//#endregion
+
+//#region Get Today's Appointments
+
+async function GetTodaysAppointments() {
+  let response = await instance.get("");
+  console.log(response.data);
+}
+
+//#endregion
+
+//#region Delete Appointment
+
+async function DeleteAppointment() {
+  let appointmentId = readline.question("Appointment Id: ");
+  let response = await instance.delete(`${appointmentId}`);
+  console.log(response.data);
 }
 
 //#endregion

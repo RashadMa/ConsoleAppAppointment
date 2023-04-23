@@ -50,6 +50,7 @@ var options = [
     "Get Weekly Appointments",
     "Get Todays Appointments",
     "Get All Continuing Appointments",
+    "Delete Appointment",
 ];
 //#endregion
 //#region Main Method
@@ -68,33 +69,48 @@ function Main() {
                         case 2: return [3 /*break*/, 3];
                         case 3: return [3 /*break*/, 5];
                         case 4: return [3 /*break*/, 7];
-                        case 7: return [3 /*break*/, 9];
+                        case 5: return [3 /*break*/, 9];
+                        case 6: return [3 /*break*/, 11];
+                        case 7: return [3 /*break*/, 13];
+                        case 8: return [3 /*break*/, 15];
                     }
-                    return [3 /*break*/, 11];
+                    return [3 /*break*/, 17];
                 case 1: return [4 /*yield*/, PostAppointment()];
                 case 2:
                     _b.sent();
-                    return [3 /*break*/, 12];
+                    return [3 /*break*/, 18];
                 case 3: return [4 /*yield*/, EndAppointment()];
                 case 4:
                     _b.sent();
-                    return [3 /*break*/, 12];
+                    return [3 /*break*/, 18];
                 case 5: return [4 /*yield*/, GetAppointmentById()];
                 case 6:
                     _b.sent();
-                    return [3 /*break*/, 12];
+                    return [3 /*break*/, 18];
                 case 7: return [4 /*yield*/, GetAllAppointments()];
                 case 8:
                     _b.sent();
-                    return [3 /*break*/, 12];
-                case 9: return [4 /*yield*/, GetAllContuningAppointments()];
+                    return [3 /*break*/, 18];
+                case 9: return [4 /*yield*/, GetWeeklyAppointments()];
                 case 10:
                     _b.sent();
-                    return [3 /*break*/, 12];
-                case 11:
+                    return [3 /*break*/, 18];
+                case 11: return [4 /*yield*/, GetTodaysAppointments()];
+                case 12:
+                    _b.sent();
+                    return [3 /*break*/, 18];
+                case 13: return [4 /*yield*/, GetAllContuningAppointments()];
+                case 14:
+                    _b.sent();
+                    return [3 /*break*/, 18];
+                case 15: return [4 /*yield*/, DeleteAppointment()];
+                case 16:
+                    _b.sent();
+                    return [3 /*break*/, 18];
+                case 17:
                     console.log("Select proper answer");
-                    return [3 /*break*/, 12];
-                case 12: return [2 /*return*/];
+                    return [3 /*break*/, 18];
+                case 18: return [2 /*return*/];
             }
         });
     });
@@ -193,6 +209,56 @@ function GetAllContuningAppointments() {
                     appointments = response.data;
                     filterContuningAppointments = appointments.filter(function (item) { return !item.endDate; });
                     console.log(filterContuningAppointments);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+//#endregion
+//#region Get Weekly Appointments
+function GetWeeklyAppointments() {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, instance.get("")];
+                case 1:
+                    response = _a.sent();
+                    console.log(response.data);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+//#endregion
+//#region Get Today's Appointments
+function GetTodaysAppointments() {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, instance.get("")];
+                case 1:
+                    response = _a.sent();
+                    console.log(response.data);
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+//#endregion
+//#region Delete Appointment
+function DeleteAppointment() {
+    return __awaiter(this, void 0, void 0, function () {
+        var appointmentId, response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    appointmentId = readline.question("Appointment Id: ");
+                    return [4 /*yield*/, instance.delete("".concat(appointmentId))];
+                case 1:
+                    response = _a.sent();
+                    console.log(response.data);
                     return [2 /*return*/];
             }
         });
